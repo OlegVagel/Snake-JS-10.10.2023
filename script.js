@@ -4,13 +4,19 @@ const gameBoard = document.getElementById("gameBoard");
 const ctx = gameBoard.getContext("2d");
 const scoreText = document.getElementById("scoreText");
 const resetBtn = document.getElementById("resetBtn");
-let gameWidth = gameBoard.width; //by index.html set to 500 ((unitSize) 25 * 20)
-let gameHeight = gameBoard.height; //by index.html set to 500 ((unitSize) 25 * 20)
-// change to vars after learning how this even works lol
+const playBtn = document.getElementById("playBtn");
+const unitSize = 25;
+let currentWindowWidth = window.innerWidth;
+let currentWindowHeight = window.innerHeight;
+let gameHeight = Math.floor(currentWindowHeight / unitSize) * unitSize;
+let gameWidth = Math.floor(currentWindowWidth / unitSize) * unitSize;
+
+gameBoard.height = gameHeight;
+gameBoard.width = gameWidth;
+let initialPlay = false;
 let boardBackground = "rgb(51, 50, 59)"; //--backgroundPurple
 let snakeColor = "rgb(194, 191, 222)"; //--lightcolor1
 let foodColor = "rgb(124, 119, 166)"; //--darkercolor1
-const unitSize = 25;
 let isRunning = false;
 // xVelocity & yVelocit control wether we're moving up down etc.
 let speed = 25; // MUST BE MULTIPLE OF unitSize !
@@ -29,11 +35,21 @@ let snake = [
 
 window.addEventListener("keydown", changeDirection);
 resetBtn.addEventListener("click", resetGame);
+playBtn.addEventListener("click", gameStart);
 
-gameStart();
-
+//toggle PopUp Menu
+function togglePopUp() {
+  const PopUp = document.querySelector(".PopUp");
+  PopUp.classList.toggle("IsOpen");
+  if (initialPlay == false) {
+    scoreText.classList.toggle("IsOpen");
+    playBtn.classList.toggle("IsOpen");
+    initialPlay = true;
+  }
+}
 // starts the Game
 function gameStart() {
+  togglePopUp();
   isRunning = true;
   scoreText.textContent = currentScore;
   createFood();
@@ -156,8 +172,9 @@ function checkIsGameOver() {
 }
 //
 function displayGameOver() {
-  scoreText.textContent = "-=GAMER OVER=- FINAL-SCORE: " + currentScore;
+  scoreText.textContent = "GAMER OVER, SCORE: " + currentScore;
   isRunning = false;
+  togglePopUp();
 }
 //
 function resetGame() {

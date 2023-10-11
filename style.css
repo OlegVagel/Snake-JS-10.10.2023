@@ -5,52 +5,103 @@
 :root {
   --backgroundPurple: rgb(51, 50, 59);
   --lightcolor1: rgb(194, 191, 222);
+  --lightcolor2: rgb(70, 68, 84);
   --darkercolor1: rgb(124, 119, 166);
 }
 
 body {
   font-family: "Poppins", sans-serif;
   background-color: var(--backgroundPurple);
+  margin: 0px;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-p,
 h1 {
+  text-decoration: underline;
+}
+p,
+h1,
+h4 {
+  margin: 0%;
   text-align: center;
   color: var(--lightcolor1);
+}
+button {
+  display: block;
+  margin: 0.5rem auto;
+  font-weight: 700;
+  transition: all 300ms ease;
+  padding: 1rem;
+  width: 70%;
+  border-radius: 3rem;
+  background: var(--lightcolor2);
+  border: var(--lightcolor1) 0.3rem solid;
+  color: var(--lightcolor1);
+}
+
+button:hover {
+  cursor: pointer;
+  background: var(--lightcolor1);
+  color: var(--backgroundPurple);
+}
+
+/* POPUP STYLING */
+.PopUp {
+  display: block;
+  background-color: antiquewhite;
+  width: 70%;
+  height: 70%;
+  border-radius: 3rem;
+  background: var(--lightcolor2);
+  border: var(--lightcolor1) 0.3rem solid;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.PopUp.IsOpen {
+  display: none;
+}
+
+#playBtn.IsOpen {
+  display: none;
+}
+
+.PopUpText {
+  padding: 0.5rem;
+}
+
+.PopUpButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#PopUpBottomText {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
 }
 
 /* GAME STYLING */
 
 #scoreText {
-  margin-bottom: 1rem;
-}
-#gameContainer {
-  display: block;
-  text-align: center;
-  font-size: 2rem;
-}
-#gameBoard {
-  border: 0.3rem solid var(--lightcolor1);
-}
-#resetBtn {
-  display: block;
-  margin: 0 auto;
-  font-weight: 600;
-  transition: all 300ms ease;
-  padding: 1rem;
-  width: 8rem;
-  border-radius: 3rem;
-  background: var(--backgroundPurple);
-  border: var(--lightcolor1) 0.3rem solid;
-  color: var(--lightcolor1);
+  position: absolute;
+  padding: 0%;
+  margin: 0%;
+  font-size: 3rem;
+  color: rgba(194, 191, 222, 0.5);
+  cursor: default;
+  width: 100%;
+  user-select: none;
 }
 
-#resetBtn:hover {
-  cursor: pointer;
-  background: var(--lightcolor1);
-  color: var(--backgroundPurple);
+#scoreText.IsOpen {
+  display: none;
 }
