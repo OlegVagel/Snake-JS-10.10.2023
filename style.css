@@ -2,9 +2,15 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
+:root {
+  --backgroundPurple: rgb(51, 50, 59);
+  --lightcolor1: rgb(194, 191, 222);
+  --darkercolor1: rgb(124, 119, 166);
+}
+
 body {
   font-family: "Poppins", sans-serif;
-  background-color: rgb(51, 50, 59);
+  background-color: var(--backgroundPurple);
 }
 
 html {
@@ -14,7 +20,7 @@ html {
 p,
 h1 {
   text-align: center;
-  color: rgb(194, 191, 222);
+  color: var(--lightcolor1);
 }
 
 /* GAME STYLING */
@@ -28,7 +34,7 @@ h1 {
   font-size: 2rem;
 }
 #gameBoard {
-  border: 0.3rem solid rgb(194, 191, 222);
+  border: 0.3rem solid var(--lightcolor1);
 }
 #resetBtn {
   display: block;
@@ -38,13 +44,13 @@ h1 {
   padding: 1rem;
   width: 8rem;
   border-radius: 3rem;
-  background: rgb(51, 50, 59);
-  border: rgb(194, 191, 222) 0.3rem solid;
-  color: rgb(194, 191, 222);
+  background: var(--backgroundPurple);
+  border: var(--lightcolor1) 0.3rem solid;
+  color: var(--lightcolor1);
 }
 
 #resetBtn:hover {
   cursor: pointer;
-  background: rgb(194, 191, 222);
-  color: rgb(51, 50, 59);
+  background: var(--lightcolor1);
+  color: var(--backgroundPurple);
 }
