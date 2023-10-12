@@ -37,13 +37,7 @@ resetBtn.addEventListener("click", resetGame);
 playBtn.addEventListener("click", gameStart);
 window.addEventListener("keydown", changeDirection);
 window.addEventListener("touchstart", changeDirection);
-// mobile controlls implementation
-/*
-window.addEventListener("touchstart", (touch) => {
-  touchX = touch.changedTouches[0].pageX;
-  touchY = touch.changedTouches[0].pageY;
-});
-*/
+
 // toggle PopUp Menu
 function togglePopUp() {
   const PopUp = document.querySelector(".PopUp");
@@ -55,6 +49,7 @@ function togglePopUp() {
     initialPlay = true;
   }
 }
+
 // starts the Game
 function gameStart() {
   togglePopUp();
@@ -150,28 +145,36 @@ function changeDirection(event) {
   switch (true) {
     case (keyPressed == leftArrow ||
       keyPressed == leftLetter ||
-      touchX < gameWidth / 3) &&
+      (touchX < gameWidth / 3 &&
+        touchY > gameHeight / 3 &&
+        touchY < (gameHeight / 3) * 2)) &&
       !goingRight:
       xVelocity = -unitSize;
       yVelocity = 0;
       break;
     case (keyPressed == rightArrow ||
       keyPressed == rightLetter ||
-      touchX > (gameWidth / 3) * 2) &&
+      (touchX > (gameWidth / 3) * 2 &&
+        touchY > gameHeight / 3 &&
+        touchY < (gameHeight / 3) * 2)) &&
       !goingLeft:
       xVelocity = unitSize;
       yVelocity = 0;
       break;
     case (keyPressed == upArrow ||
       keyPressed == upLetter ||
-      touchY < gameHeight / 3) &&
+      (touchY < gameHeight / 3 &&
+        touchX > gameWidth / 3 &&
+        touchX < (gameWidth / 3) * 2)) &&
       !goingDown:
       xVelocity = 0;
       yVelocity = -unitSize;
       break;
     case (keyPressed == downArrow ||
       keyPressed == downLetter ||
-      touchY > (gameHeight / 3) * 2) &&
+      (touchY > (gameHeight / 3) * 2 &&
+        touchX > gameWidth / 3 &&
+        touchX < (gameWidth / 3) * 2)) &&
       !goingUp:
       xVelocity = 0;
       yVelocity = unitSize;

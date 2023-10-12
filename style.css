@@ -134,6 +134,7 @@ button:hover {
 .arrowRight {
   position: absolute;
   max-width: 3rem;
+  user-select: none;
 }
 .arrowUp {
   top: 0px;
