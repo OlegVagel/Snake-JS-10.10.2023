@@ -4,6 +4,7 @@
 
 :root {
   --backgroundPurple: rgb(51, 50, 59);
+  --extraDarkPurple: rgb(33, 32, 38);
   --lightcolor1: rgb(194, 191, 222);
   --lightcolor2: rgb(70, 68, 84);
   --darkercolor1: rgb(124, 119, 166);
@@ -11,7 +12,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: var(--backgroundPurple);
+  background-color: var(--extraDarkPurple);
   margin: 0px;
 }
 
@@ -98,10 +99,61 @@ button:hover {
   font-size: 3rem;
   color: rgba(194, 191, 222, 0.5);
   cursor: default;
-  width: 100%;
+  width: 95%;
   user-select: none;
+  pointer-events: none;
+}
+#gameContainer {
+  text-align: center;
 }
 
 #scoreText.IsOpen {
   display: none;
+}
+
+#resetBtn.IsOpen {
+  display: none;
+}
+
+/* MOBILE STYLING */
+#mobileControlls {
+  position: absolute;
+  width: 95%;
+  height: 95%;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.arrowUp,
+.arrowDown,
+.arrowLeft,
+.arrowRight {
+  position: absolute;
+  max-width: 3rem;
+}
+.arrowUp {
+  top: 0px;
+  left: 50%;
+  transform: translate(-50%) rotate(180deg);
+}
+.arrowDown {
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.arrowLeft {
+  left: 0px;
+  top: 50%;
+  transform: translate(0%, -50%) rotate(90deg);
+}
+
+.arrowRight {
+  right: 0px;
+  top: 50%;
+  transform: translate(0%, -50%) rotate(-90deg);
 }

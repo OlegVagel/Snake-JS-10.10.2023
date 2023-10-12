@@ -33,15 +33,23 @@ let snake = [
   { x: 0, y: 0 },
 ];
 
-window.addEventListener("keydown", changeDirection);
 resetBtn.addEventListener("click", resetGame);
 playBtn.addEventListener("click", gameStart);
-
-//toggle PopUp Menu
+window.addEventListener("keydown", changeDirection);
+window.addEventListener("touchstart", changeDirection);
+// mobile controlls implementation
+/*
+window.addEventListener("touchstart", (touch) => {
+  touchX = touch.changedTouches[0].pageX;
+  touchY = touch.changedTouches[0].pageY;
+});
+*/
+// toggle PopUp Menu
 function togglePopUp() {
   const PopUp = document.querySelector(".PopUp");
   PopUp.classList.toggle("IsOpen");
   if (initialPlay == false) {
+    resetBtn.classList.toggle("IsOpen");
     scoreText.classList.toggle("IsOpen");
     playBtn.classList.toggle("IsOpen");
     initialPlay = true;
@@ -115,7 +123,18 @@ function drawSnake() {
 }
 //
 function changeDirection(event) {
-  const keyPressed = event.keyCode;
+  if (event.type == "keydown") {
+    var keyPressed = event.keyCode;
+  } else if (event.type == "touchstart") {
+    var touchX = event.changedTouches[0].pageX;
+    var touchY = event.changedTouches[0].pageY;
+  }
+
+  const goingUp = yVelocity == -unitSize;
+  const goingDown = yVelocity == unitSize;
+  const goingLeft = xVelocity == -unitSize;
+  const goingRight = xVelocity == unitSize;
+
   //keycodes
   const leftArrow = 37;
   const rightArrow = 39;
@@ -126,34 +145,40 @@ function changeDirection(event) {
   const upLetter = 87;
   const downLetter = 83;
 
-  const goingUp = yVelocity == -unitSize;
-  const goingDown = yVelocity == unitSize;
-  const goingLeft = xVelocity == -unitSize;
-  const goingRight = xVelocity == unitSize;
-
+  // wonky mobile controlls (although they work)
+  // right and left go over up down (fix)
   switch (true) {
-    // going left (can't go left if already moving to the right)
-    case (keyPressed == leftArrow || keyPressed == leftLetter) && !goingRight:
+    case (keyPressed == leftArrow ||
+      keyPressed == leftLetter ||
+      touchX < gameWidth / 3) &&
+      !goingRight:
       xVelocity = -unitSize;
       yVelocity = 0;
       break;
-    // going right (can't go left if already moving to the left)
-    case (keyPressed == rightArrow || keyPressed == rightLetter) && !goingLeft:
+    case (keyPressed == rightArrow ||
+      keyPressed == rightLetter ||
+      touchX > (gameWidth / 3) * 2) &&
+      !goingLeft:
       xVelocity = unitSize;
       yVelocity = 0;
       break;
-    // going up (can't go left if already moving down)
-    case (keyPressed == upArrow || keyPressed == upLetter) && !goingDown:
+    case (keyPressed == upArrow ||
+      keyPressed == upLetter ||
+      touchY < gameHeight / 3) &&
+      !goingDown:
       xVelocity = 0;
       yVelocity = -unitSize;
       break;
-    // going down (can't go left if already moving up)
-    case (keyPressed == downArrow || keyPressed == downLetter) && !goingUp:
+    case (keyPressed == downArrow ||
+      keyPressed == downLetter ||
+      touchY > (gameHeight / 3) * 2) &&
+      !goingUp:
       xVelocity = 0;
       yVelocity = unitSize;
       break;
   }
 }
+
 // set isRunning to false if loose condition occurs
 function checkIsGameOver() {
   switch (true) {
