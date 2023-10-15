@@ -18,6 +18,8 @@ let boardBackground = "rgb(51, 50, 59)"; //--backgroundPurple
 let snakeColor = "rgb(194, 191, 222)"; //--lightcolor1
 let foodColor = "rgb(124, 119, 166)"; //--darkercolor1
 let isRunning = false;
+// bugfix for being able to change directions before snake gets rendered
+let justMoved = false;
 // xVelocity & yVelocit control wether we're moving up down etc.
 let speed = 25; // MUST BE MULTIPLE OF unitSize !
 let xVelocity = speed;
@@ -35,9 +37,10 @@ let snake = [
 
 resetBtn.addEventListener("click", resetGame);
 playBtn.addEventListener("click", gameStart);
-window.addEventListener("keydown", changeDirection);
-window.addEventListener("touchstart", changeDirection);
-
+if (justMoved != true) {
+  window.addEventListener("keydown", changeDirection);
+  window.addEventListener("touchstart", changeDirection);
+}
 // toggle PopUp Menu
 function togglePopUp() {
   const PopUp = document.querySelector(".PopUp");
@@ -64,6 +67,7 @@ function nextTick() {
   if (isRunning == true) {
     // note : setTimeout() gets called every x seconds
     tickTimer = setTimeout(() => {
+      justMoved = false;
       clearBoard();
       drawFood();
       moveSnake();
@@ -142,43 +146,49 @@ function changeDirection(event) {
 
   // wonky mobile controlls (although they work)
   // right and left go over up down (fix)
-  switch (true) {
-    case (keyPressed == leftArrow ||
-      keyPressed == leftLetter ||
-      (touchX < gameWidth / 3 &&
-        touchY > gameHeight / 3 &&
-        touchY < (gameHeight / 3) * 2)) &&
-      !goingRight:
-      xVelocity = -unitSize;
-      yVelocity = 0;
-      break;
-    case (keyPressed == rightArrow ||
-      keyPressed == rightLetter ||
-      (touchX > (gameWidth / 3) * 2 &&
-        touchY > gameHeight / 3 &&
-        touchY < (gameHeight / 3) * 2)) &&
-      !goingLeft:
-      xVelocity = unitSize;
-      yVelocity = 0;
-      break;
-    case (keyPressed == upArrow ||
-      keyPressed == upLetter ||
-      (touchY < gameHeight / 3 &&
-        touchX > gameWidth / 3 &&
-        touchX < (gameWidth / 3) * 2)) &&
-      !goingDown:
-      xVelocity = 0;
-      yVelocity = -unitSize;
-      break;
-    case (keyPressed == downArrow ||
-      keyPressed == downLetter ||
-      (touchY > (gameHeight / 3) * 2 &&
-        touchX > gameWidth / 3 &&
-        touchX < (gameWidth / 3) * 2)) &&
-      !goingUp:
-      xVelocity = 0;
-      yVelocity = unitSize;
-      break;
+  if (justMoved != true) {
+    switch (true) {
+      case (keyPressed == leftArrow ||
+        keyPressed == leftLetter ||
+        (touchX < gameWidth / 3 &&
+          touchY > gameHeight / 3 &&
+          touchY < (gameHeight / 3) * 2)) &&
+        !goingRight:
+        xVelocity = -unitSize;
+        yVelocity = 0;
+        justMoved = true;
+        break;
+      case (keyPressed == rightArrow ||
+        keyPressed == rightLetter ||
+        (touchX > (gameWidth / 3) * 2 &&
+          touchY > gameHeight / 3 &&
+          touchY < (gameHeight / 3) * 2)) &&
+        !goingLeft:
+        xVelocity = unitSize;
+        yVelocity = 0;
+        justMoved = true;
+        break;
+      case (keyPressed == upArrow ||
+        keyPressed == upLetter ||
+        (touchY < gameHeight / 3 &&
+          touchX > gameWidth / 3 &&
+          touchX < (gameWidth / 3) * 2)) &&
+        !goingDown:
+        xVelocity = 0;
+        yVelocity = -unitSize;
+        justMoved = true;
+        break;
+      case (keyPressed == downArrow ||
+        keyPressed == downLetter ||
+        (touchY > (gameHeight / 3) * 2 &&
+          touchX > gameWidth / 3 &&
+          touchX < (gameWidth / 3) * 2)) &&
+        !goingUp:
+        xVelocity = 0;
+        yVelocity = unitSize;
+        justMoved = true;
+        break;
+    }
   }
 }
 

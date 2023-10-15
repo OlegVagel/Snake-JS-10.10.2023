@@ -14,7 +14,6 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: var(--extraDarkPurple);
   margin: 0px;
-  overflow: hidden;
 }
 
 html {
